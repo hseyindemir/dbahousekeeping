@@ -32,18 +32,18 @@ function Check-SqlServerDb {
     process {
         
         #Check ServerName for DNS
-        $PrimaryServerName = Invoke-Database_NameQuery -SqlInstance $serverName -Database master -Query "Select @@servername AS Primary_Server"
+        $PrimaryServerName = Invoke-DbaQuery -SqlInstance $serverName -Database master -Query "Select @@servername AS Primary_Server"
         
 
         #Check CPU Core for Server
-        $CpuCores = Invoke-Database_NameQuery -SqlInstance $serverName -Database master -Query "SELECT cpu_count as CPU_Cores FROM [sys].[dm_os_sys_info]"
+        $CpuCores = Invoke-DbaQuery -SqlInstance $serverName -Database master -Query "SELECT cpu_count as CPU_Cores FROM [sys].[dm_os_sys_info]"
 
         #Check WhoisActive for Server
-        $WhoisActive = Invoke-Database_NameQuery -SqlInstance $serverName -Database master -Query "exec sp_whoisactive2"
+        $WhoisActive = Invoke-DbaQuery -SqlInstance $serverName -Database master -Query "exec sp_whoisactive2"
         #$ActiveSessions = $WhoisActive.Count
 
         #Check PLE 
-        $PageLifeExpectancy = Invoke-Database_NameQuery -SqlInstance $serverName -Database master -Query "SELECT
+        $PageLifeExpectancy = Invoke-DbaQuery -SqlInstance $serverName -Database master -Query "SELECT
         [cntr_value] as PLE_Value FROM sys.dm_os_performance_counters
         WHERE [object_name] LIKE '%Manager%'
         AND [counter_name] = 'Page life expectancy'"
