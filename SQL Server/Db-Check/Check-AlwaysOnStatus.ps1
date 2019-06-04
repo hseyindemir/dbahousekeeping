@@ -30,7 +30,7 @@ function Check-AlwaysOn {
     
     process {
         
-        $AlwaysOnStatus = Invoke-Database_NameQuery -SqlInstance $serverName -Database Database_Name -Query "exec sp_AlwaysOnDataLoss" | Select-Object -Property ag_replica_server, ag_name, database_name, connected_state_desc, synchronization_health_desc, estimated_data_loss_time | Format-Table -AutoSize -Wrap
+        $AlwaysOnStatus = Invoke-DbaQuery -SqlInstance $serverName -Database Database_Name -Query "exec sp_AlwaysOnDataLoss" | Select-Object -Property ag_replica_server, ag_name, database_name, connected_state_desc, synchronization_health_desc, estimated_data_loss_time | Format-Table -AutoSize -Wrap
 
         
     }
